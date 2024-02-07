@@ -49,14 +49,14 @@ Vous pouvez alors lancer le code depuis le fichier Console.ipynb
 __________________________________________________________________
 ## Achitecture du code
 ```
-📦ACC platoon fuel consumption
- ┣ 📂conda
- ┃ ┣ 📜env.yaml
- ┣ 📜Ascenseur.py %contient la classe Ascenseur
- ┣ 📜Misc.py %contient la génération de la demande et le système de contrôle de l'ascenseur
- ┣ 📜postprocessing.py %fonctions de plot
- ┣ 📜Usager.py %contient la classe Usager
- ┣ 📜simulateur.py %fonction de simulation du modèle
- ┗ 📜Console.ipynb %interface que vous utilisez pour générer les codes
+📦 ACC platoon fuel consumption
+ ┣ 📂 conda
+ ┃ ┣ 📜 env.yaml
+ ┣ 📜 Ascenseur.py %contient la classe Ascenseur
+ ┣ 📜 Misc.py %contient la génération de la demande et le système de contrôle de l'ascenseur
+ ┣ 📜 postprocessing.py %fonctions de plot
+ ┣ 📜 Usager.py %contient la classe Usager
+ ┣ 📜 simulateur.py %fonction de simulation du modèle
+ ┗ 📜 Console.ipynb %interface que vous utilisez pour générer les codes
 ```
  Merci de respecter cette architecture quand vous coderez et de bien conserver le formalisme que nous avons mis en place pour les commentaires
