@@ -4,10 +4,10 @@ Copyrights:<br>
 @Author : Thibault Charlottin <br>
 @Contributor : Christine Buisson <br>
 
-## Installation des packages:
+## Installation des packages
 
-2 options s'offent à vous :<br>
-- après avoir installé conda, ouvrir Anaconda navigator puis ouvrir l'invite de commandes depuis le navigateur :
+2 options sont possibles à vous :<br>
+- après avoir installé conda, ouvrir Anaconda navigator puis cliquer sur invite de commandes depuis le navigateur :
 
 Copy your local path to this repository
 Then open the command prompt
