@@ -21,7 +21,7 @@ conda env create -f conda/env.yaml
 
 Activate it:
 ````bash
-conda activate engine_ACC_TRB_2023
+conda activate motus
 ````
 
 You can then run the commands in the console.ipynb file 
@@ -36,12 +36,12 @@ cd %paste your path
 
 then type 
 ````bash
-conda env create -f conda/ACC_fuel_windows.yml
+conda env create -f env.yml
 ````
 
 Activate it:
 ````bash
-conda activate engine_ACC_TRB_2023
+conda activate motus
 ````
 - Option 2 : passer par l'onglet environnement de Anaconda Navigator comme présenté en cours
 
