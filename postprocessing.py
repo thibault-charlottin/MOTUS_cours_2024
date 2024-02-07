@@ -62,22 +62,22 @@ def plot_attente_usagers(Usagers):
     sns.histplot(df_usagers['heures demandes'],kde = True, bins = 100, label = 'heure de demande')
     sns.histplot(df_usagers['heure arrivée ascenseur'],kde = True, bins = 100, label = 'heure arrivée ascenseur')
     sns.histplot(df_usagers['heures arrivée étage'],kde = True, bins = 100, label = 'heure arrivée étage')
-    plt.title('Histgramme des demandes, arrivées devant usager et arrivée à destination')
+    plt.title('Histogramme des demandes, arrivées devant usager et arrivée à destination')
     plt.show()
     df_usagers.sort_values(by='heures demandes', inplace = True)
     df_usagers['plage demande'] = df_usagers['heures demandes'].dt.floor('60T').dt.hour.astype('str')
-    sns.boxplot(data = df_usagers, x = 'attente', y='plage demande')
-    plt.xlabel('attente [s]')
-    plt.ylabel('plage de demande [h]')
+    sns.boxplot(data = df_usagers, y = 'attente', x='plage demande')
+    plt.ylabel('attente [s]')
+    plt.xlabel('plage de demande [h]')
     plt.title('Boxplot des attentes par plages d une heure')
     plt.show()
-    sns.boxplot(data = df_usagers, x= 'temps dans ascenseur', y = 'plage demande')
-    plt.xlabel("temps passé dans l'ascenseur [s]")
-    plt.ylabel('plage de demande [h]')
+    sns.boxplot(data = df_usagers, y= 'temps dans ascenseur', x = 'plage demande')
+    plt.ylabel("temps passé dans l'ascenseur [s]")
+    plt.xlabel('plage de demande [h]')
     plt.title('Boxplot des temps de trajet par plages d une heure')
     return 0
 
-def plot_conso_ascenseurs(ascenseurs, facteur_energetique):
+def plot_conso_ascenseurs(ascenseurs, facteur_energetique : float):
     """
     Fonction qui affiche la consommation énergétique des ascenseurs.
 
@@ -100,7 +100,7 @@ def plot_conso_ascenseurs(ascenseurs, facteur_energetique):
         conso[k].insert(0,0)
     for c in range(len(conso)) : 
         plt.scatter(liste_ascenseurs[c],np.sum(conso[c]))
-    plt.xlabel('consomation totale [kWh]')
-    plt.ylabel('Ascenseur')
+    plt.ylabel('consomation totale [kWh]')
+    plt.xlabel('Ascenseur')
     plt.title('Consomation par ascenseur')
     return 0
