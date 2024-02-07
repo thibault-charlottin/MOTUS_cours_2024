@@ -11,9 +11,9 @@ Copyrights:<br>
 
 Copy your local path to this repository
 Then open the command prompt
-````bash
+```bash
 cd %paste your path
-````
+```
 
 ````bash
 conda env create -f conda/env.yaml
