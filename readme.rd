@@ -43,7 +43,7 @@ Activate it:
 ````bash
 conda activate motus
 ````
-- Option 2 : passer par l'onglet environnement de Anaconda Navigator comme présenté en cours
+- Option 2 : passer par la fenêtre environnement de Anaconda Navigator comme présenté en cours
 
 Vous pouvez alors lancer le code depuis le fichier Console.ipynb
 __________________________________________________________________
