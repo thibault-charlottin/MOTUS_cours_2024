@@ -52,7 +52,7 @@ def simuler(evenements_demande, ascenseurs):
             if len(ascenseur_utilise.temps_prochains_arret)==0:
                 heure_arrivee_cible = temps_actuel + timedelta(seconds = int(np.abs(evenement[1].etage_actuel-evenement[1].liste_etages[0])/ascenseur_utilise.vitesse))
             else:
-                heure_arrivee_cible = ascenseur_utilise.temps_prochains_arret[-1] + timedelta(seconds = int(np.abs(ascenseur_utilise.prochains_arret[-1]-evenement[1].liste_etages[0])/ascenseur_utilise.vitesse))
+                heure_arrivee_cible = max(temps_actuel,ascenseur_utilise.temps_prochains_arret[-1] + timedelta(seconds = int(np.abs(ascenseur_utilise.prochains_arret[-1]-evenement[1].liste_etages[0])/ascenseur_utilise.vitesse)))
             ascenseur_utilise.temps_prochains_arret.append(heure_arrivee_cible)
             evenements_demande.append((heure_arrivee_cible,evenement[1], ascenseur_utilise, 'arrivee a destination'))
             evenement[1].history['heure arrivée ascenseur'].append(temps_actuel)

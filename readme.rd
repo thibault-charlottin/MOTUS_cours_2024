@@ -3,7 +3,7 @@
 Copyrights:<br>
 @Author : Thibault Charlottin <br>
 @Contributor : Christine Buisson <br>
-
+License CeCILL 
 ## Installation des packages
 
 2 options sont possibles à vous :<br>
