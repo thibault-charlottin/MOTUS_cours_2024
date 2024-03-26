@@ -122,7 +122,7 @@ def controle_ascenseur(liste_ascenseurs:list,evenement:tuple):
     ascenseurs_libres = []
     ascenseurs_possibles = []
     for asc in liste_ascenseurs:
-        if asc.nombre_personnes<asc.capacite and int(evenement[1].liste_etages[0]) in asc.etages_accessibles:
+        if asc.nombre_personnes<asc.capacite and int(evenement[1].liste_etages[0]) in asc.etages_accessibles and int(evenement[1].etage_actuel) in asc.etages_accessibles :
             if asc.prochains_arret==[]:
                 ascenseurs_libres.append(asc)
             elif  asc.position<=int(evenement[1].liste_etages[0])<=asc.prochains_arret[0] or asc.position>=int(evenement[1].liste_etages[0])>=asc.prochains_arret[0]:
