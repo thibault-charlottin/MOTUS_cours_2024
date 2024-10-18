@@ -1,6 +1,6 @@
 ### Définition de la fonction de simulation
 ### @author : Thibault Charlottin
-### @contributor : Christine Buisson
+### @contributor : Christine Buisson, Romane Jouanen, Clément Phillibert
 from Ascenseur import Ascenseur 
 from Usager import Usager
 from Misc import controle_ascenseur
@@ -8,7 +8,7 @@ from Misc import controle_ascenseur
 from datetime import timedelta
 import numpy as np
 
-def simuler(evenements_demande, ascenseurs):
+def simuler(evenements_demande, ascenseurs, temps_1etage):
     Liste_usagers = []
     for usager in evenements_demande:
          if usager[1] not in Liste_usagers:
@@ -16,12 +16,13 @@ def simuler(evenements_demande, ascenseurs):
     while evenements_demande:
         # Sort events by increasing time order
         evenements_demande.sort(key=lambda evenement: evenement[0])
-        
+
         # Process the first event
         evenement = evenements_demande.pop(0)
         temps_actuel = evenement[0]
-        if evenement[-1]=='demande':
-             # Select the nearest elevator
+
+        if evenement[-1]=='demande_acsenseur':
+            # Select the nearest elevator
             Asc = controle_ascenseur(ascenseurs,evenement)
             if type(Asc) != Ascenseur:
                 pass
@@ -31,7 +32,7 @@ def simuler(evenements_demande, ascenseurs):
                 temps_attente =  temps_arrivee - temps_actuel
                 Asc.temps_prochains_arret = []
                 for events in range(len(evenements_demande)):
-                    if evenements_demande[events][-1]!='demande' and evenements_demande[events][-2]==Asc:
+                    if evenements_demande[events][-1]!='demande_ascenseur' and evenements_demande[events][-2]==Asc:
                         heure = evenements_demande[events][0]+ temps_attente
                         Asc.temps_prochains_arret.append(evenements_demande[events][0])
                         evenements_demande[events] = (heure,evenements_demande[events][1],Asc,evenements_demande[events][-1])
@@ -56,6 +57,7 @@ def simuler(evenements_demande, ascenseurs):
             ascenseur_utilise.temps_prochains_arret.append(heure_arrivee_cible)
             evenements_demande.append((heure_arrivee_cible,evenement[1], ascenseur_utilise, 'arrivee a destination'))
             evenement[1].history['heure arrivée ascenseur'].append(temps_actuel)
+
         elif evenement[-1]== 'arrivee a destination':
             ascenseur_utilise = evenement[-2]
             ascenseur_utilise.deplacer(evenement[1].liste_etages[0])
@@ -68,6 +70,28 @@ def simuler(evenements_demande, ascenseurs):
             ascenseur_utilise.retirer_personne()
             evenement[1].history['heures arrivée étage'].append(temps_actuel)
             evenement[1].history['mode transport'].append('Ascenseur')
+
+        elif evenement[-1] == 'demande_escalier' or evenement[-1] == 'arrivee a destination escalier':
+            if evenement[-1] == 'demande_escalier':
+                #select escalier : un seul escalier possible --> pas de sélection
+                #arrival time of escalier : 0s --> pas d'attente d'escalier
+                temps_arrivee = temps_actuel
+                temps_attente = 0
+                #escalier devant usager
+                escalier_utilise = evenement[-2]
+                #escalier_utilise.prochains_arret.append(evenement[-1].liste_etages[0])
+                #del(escalier_utilise.prochains_arret[0])
+                temps_trajet = temps_1etage*(evenement[1].liste_etages[0])
+                temps_trajet_datetime = timedelta(seconds=temps_trajet)
+                evenements_demande.append((temps_arrivee + temps_trajet_datetime,evenement[1], escalier_utilise, 'arrivee a destination escalier'))
+            elif evenement[-1] == 'arrivee a destination escalier' :
+                escalier_utilise = evenement[-2]
+                evenement[1].etage_actuel = evenement[1].liste_etages[0]
+                #del(escalier_utilise.prochains_arret[0])
+                del(evenement[1].liste_etages[0])
+                evenement[1].history['heures arrivée étage'].append(temps_actuel)
+                evenement[1].history['mode transport'].append('Escalier')
+
 
     return Liste_usagers
 
