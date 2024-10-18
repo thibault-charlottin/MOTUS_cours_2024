@@ -7,6 +7,7 @@ import numpy as np
 from Usager import Usager
 
 
+
 def convertir_heures_timestamp(heures_decimales:float):
     """
     Fonction pour convertir un nombre décimal représentant des heures en un timestamp.
@@ -24,11 +25,22 @@ def convertir_heures_timestamp(heures_decimales:float):
     return datetime(year=2019 ,month=4, day=27, hour=heures, minute=minutes, second=secondes)
 
 
+
+# Fonction qui affecte des valeurs binaires en fonction d'une probabilité donnée
+def affectation (proba):
+    if random.random() < proba:
+        return 1
+    else :
+        return 0
+
+
+
+
 # Définition de la fonction de génération des événements de demande
 def generer_evenements_demande(nombre_usagers : int, debut_arrivee_employes : int, fin_arrivee_employes : int,
                             debut_pause_dejeuner : int, fin_pause_dejeuner : int,
                             duree_mini_pause_dejeuner : int, duree_max_pause_dejeuner : int,
-                            debut_depart_employes : int, fin_depart_employes : int, valeur_graine : int):
+                            debut_depart_employes : int, fin_depart_employes : int,                          valeur_graine : int, proba : float):
     
     """génère la demande de l'ascenseur pour chaque usager
     ---
@@ -38,7 +50,7 @@ def generer_evenements_demande(nombre_usagers : int, debut_arrivee_employes : in
     ---
     Inputs : 
     - nombre_usagers : nombre d'utilisateurs à générer
-    -debut_arrivee_employes : heure des premières arrivées au travail
+    - debut_arrivee_employes : heure des premières arrivées au travail
     - fin_arrivee_employes : heure des dernières arrivées au travail
     - debut_pause_dejeuner : heure des premiers départs pour le réfectoire/l'extérieur le midi
     - fin_pause_dejeuner : heure des derniers départs pour le réfectoire/l'extérieur le midi
@@ -69,6 +81,10 @@ def generer_evenements_demande(nombre_usagers : int, debut_arrivee_employes : in
 
     moyenne_depart = (fin_depart_employes + debut_depart_employes) / 2
     ecart_type_depart = (fin_depart_employes- debut_depart_employes) / 4
+    
+    
+    # Liste qui servira à affecter utilisation escalier (1) ou acsenseur (0) à un utilisateur
+    choix=[]
 
 
     for i in range(nombre_usagers):
@@ -98,7 +114,11 @@ def generer_evenements_demande(nombre_usagers : int, debut_arrivee_employes : in
         usager = Usager(liste_etages, heures_demande, facteur_impatience,i)
         #ajout des évènements de demande dans la liste de sortie de la fonction
         for h in heures_demande:
-            evenements_demande.append((h, usager, 'demande'))
+            choix.append(affectation(proba))
+            if etage_de_travail < 4 and choix[-1]==1:
+                evenements_demande.append((h, usager, 'demande_escalier'))
+            else :
+                evenements_demande.append((h, usager, 'demande_acsenseur'))
         evenements_demande.sort(key=lambda evenement: evenement[0])
     return evenements_demande
 
@@ -122,7 +142,7 @@ def controle_ascenseur(liste_ascenseurs:list,evenement:tuple):
     ascenseurs_libres = []
     ascenseurs_possibles = []
     for asc in liste_ascenseurs:
-        if asc.nombre_personnes<asc.capacite and int(evenement[1].liste_etages[0]) in asc.etages_accessibles and int(evenement[1].etage_actuel) in asc.etages_accessibles :
+        if asc.nombre_personnes<asc.capacite and int(evenement[1].liste_etages[0]) in asc.etages_accessibles and int(evenement[1].etage_actuel) in asc.etages_accessibles:
             if asc.prochains_arret==[]:
                 ascenseurs_libres.append(asc)
             elif  asc.position<=int(evenement[1].liste_etages[0])<=asc.prochains_arret[0] or asc.position>=int(evenement[1].liste_etages[0])>=asc.prochains_arret[0]:
