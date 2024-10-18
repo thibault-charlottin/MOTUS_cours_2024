@@ -57,6 +57,6 @@ __________________________________________________________________
  ┣ 📜 postprocessing.py %fonctions de plot
  ┣ 📜 Usager.py %contient la classe Usager
  ┣ 📜 simulateur.py %fonction de simulation du modèle
- ┗ 📜 Console.ipynb %interface que vous utilisez pour générer les codes
+ ┗ 📜 Interface.ipynb %interface que vous utilisez pour générer les codes
 ```
  Merci de respecter cette architecture quand vous coderez et de bien conserver le formalisme que nous avons mis en place pour les commentaires
